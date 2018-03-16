@@ -45,7 +45,6 @@ int main(){
 
 		/* Check if button B is pressed;
 		 * turn off LED matrix if it is. */
-		
 		if (!(GPIO->IN & button_B)) {
 			GPIO->OUTCLR = (1 << 13);
 			GPIO->OUTCLR = (1 << 14);
