@@ -35,7 +35,7 @@ int main(){
 
 	while(1){
 
-		/* Check if button B is pressed;
+		/* Check if button A is pressed;
 		 * turn on LED matrix if it is. */
 		if (!(GPIO->IN & button_A)) {
 			GPIO->OUTSET = (1 << 13);
@@ -43,6 +43,9 @@ int main(){
 			GPIO->OUTSET = (1 << 15);
 		}
 
+		/* Check if button B is pressed;
+		 * turn off LED matrix if it is. */
+		
 		if (!(GPIO->IN & button_B)) {
 			GPIO->OUTCLR = (1 << 13);
 			GPIO->OUTCLR = (1 << 14);
@@ -50,8 +53,7 @@ int main(){
 		}
 		
 
-		/* Check if button A is pressed;
-		 * turn off LED matrix if it is. */
+		
 
 		sleep = 10000;
 		while(--sleep);
