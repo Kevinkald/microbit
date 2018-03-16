@@ -12,7 +12,7 @@ typedef struct {
 	volatile uint32_t STOPTX;
 	volatile uint32_t RESERVED[3];
 	volatile uint32_t SUSPEND;
-	volatile uint32_t RESERVED1[56]
+	volatile uint32_t RESERVED1[56];
 
 	//Events
 	volatile uint32_t CTS;
@@ -37,7 +37,7 @@ typedef struct {
 	volatile uint32_t RESERVED8[1];
 	volatile uint32_t PSELRTS;
 	volatile uint32_t PSELTXD;
-	volatile uint32_t PSELCTS
+	volatile uint32_t PSELCTS;
 	volatile uint32_t PSELRXD;
 	volatile uint32_t RXD;
 	volatile uint32_t TXD;
@@ -49,6 +49,22 @@ typedef struct {
 } NRF_UART_REG;
 
 void uart_init() {
+
+//Not working
+/////////////////////////////////////////
+
+	GPIO->DIRSET = (1 << 25); 
+	GPIO->OUTCLR = (1 << 24);
+
+	GPIO->PIN_CNF[25] = 0; //TXD
+	GPIO->PIN_CNF[24] = 1; // RXD
+
+	
+	UART->PSELTXD = (1 << 24); //TX 	
+	UART->PSELRXD = (1 << 25); //RX
+
+
+/////////////////////////////////////////
 
 	//Max sendingsrate 9600 DEC -> 0x30 HEX
 	UART->BAUDRATE = 0x00275000;
@@ -65,4 +81,25 @@ void uart_init() {
 
 void uart_send(char letter) {
 	
+	UART->STARTTX = 0x1;
+	UART->TXD = letter;
+
+	while (!(UART->TXDRDY)){
+	}
+
+	UART->STOPTX = 0x1;
+
+}
+
+char uart_read() {
+	UART->RXDRDY = 0x0;
+
+
+	while (!(UART->RXDRDY)) { // can not escape this loop...
+
+	}
+
+	UART->RXD = UART->TXD;
+
+	return UART->RXD;
 }
