@@ -50,21 +50,20 @@ typedef struct {
 
 void uart_init() {
 
-//Not working
-/////////////////////////////////////////
+	//Set TX to output and RX to input
+    //PIN_TXD = 24;
+    //PIN_RXD = 25;
 
-	GPIO->DIRSET = (1 << 25); 
-	GPIO->OUTCLR = (1 << 24);
+    GPIO->DIRSET = (1 << 24);
+    GPIO->DIRCLR = (1 << 25);
+    
+    //Set TX to 1 (RX to 0)
+    GPIO->OUTSET = (1 << 24);
+    
+    //Set UART tx/rx to tx/tx pin
+    UART->PSELTXD = 24;
+   	UART->PSELRXD = 25;
 
-	GPIO->PIN_CNF[25] = 0; //TXD
-	GPIO->PIN_CNF[24] = 1; // RXD
-
-	
-	UART->PSELTXD = (1 << 24); //TX 	
-	UART->PSELRXD = (1 << 25); //RX
-
-
-/////////////////////////////////////////
 
 	//Max sendingsrate 9600 DEC -> 0x30 HEX
 	UART->BAUDRATE = 0x00275000;
