@@ -50,18 +50,15 @@ typedef struct {
 
 void uart_init() {
 
-	//Set TX to output and RX to input
-    //PIN_TXD = 24;
-    //PIN_RXD = 25;
+    	//Set TX to output and RX to input
+    	//PIN_TXD = 24;
+    	//PIN_RXD = 25;
 
-    GPIO->DIRSET = (1 << 24);
-    GPIO->DIRCLR = (1 << 25);
+    	GPIO->PIN_CNF[24] = 1;
+    	GPIO->PIN_CNF[25] = 0;
     
-    //Set TX to 1 (RX to 0)
-    GPIO->OUTSET = (1 << 24);
-    
-    //Set UART tx/rx to tx/tx pin
-    UART->PSELTXD = 24;
+    	//Set UART tx/rx to tx/tx pin
+	UART->PSELTXD = 24;
    	UART->PSELRXD = 25;
 
 
@@ -81,6 +78,7 @@ void uart_init() {
 void uart_send(char letter) {
 	
 	UART->STARTTX = 0x1;
+	UART->TXDRDY = 0;
 	UART->TXD = letter;
 
 	while (!(UART->TXDRDY)){
@@ -92,13 +90,18 @@ void uart_send(char letter) {
 
 char uart_read() {
 	UART->RXDRDY = 0x0;
-
-
-	while (!(UART->RXDRDY)) { // can not escape this loop...
+	
+	if(!(UART->RXDRDY)){
+		char letter = UART->RXD;
+		return letter;
+	}
+	else {
+		return '\0';
+	}
+	/*while (!(UART->RXDRDY)) { // can not escape this loop...
 
 	}
-
+	
 	UART->RXD = UART->TXD;
-
-	return UART->RXD;
+	return UART->RXD;*/
 }
