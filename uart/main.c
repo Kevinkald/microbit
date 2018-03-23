@@ -34,6 +34,7 @@ int main(void) {
 			uart_send('B');
 		}
 		
+		//toggle led lights 
 		if (uart_read() != '\0'){
 			led_lights();
 		}
