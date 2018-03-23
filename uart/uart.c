@@ -116,5 +116,5 @@ void led_lights() {
 		GPIO->OUTSET = (1 << 14);
 		GPIO->OUTSET = (1 << 15);
 		a = 1;
-	//}
+	}
 }	
