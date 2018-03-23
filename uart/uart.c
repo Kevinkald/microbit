@@ -49,18 +49,17 @@ typedef struct {
 } NRF_UART_REG;
 
 void uart_init() {
+	
+    //Set TX to output and RX to input
+    //PIN_TXD = 24;
+    //PIN_RXD = 25;
 
-    	//Set TX to output and RX to input
-    	//PIN_TXD = 24;
-    	//PIN_RXD = 25;
-
-    	GPIO->PIN_CNF[24] = 1;
-    	GPIO->PIN_CNF[25] = 0;
+    GPIO->PIN_CNF[24] = 1;
+    GPIO->PIN_CNF[25] = 0;
     
     	//Set UART tx/rx to tx/tx pin
 	UART->PSELTXD = 24;
    	UART->PSELRXD = 25;
-
 
 	//Max sendingsrate 9600 DEC -> 0x30 HEX
 	UART->BAUDRATE = 0x00275000;
@@ -89,19 +88,33 @@ void uart_send(char letter) {
 }
 
 char uart_read() {
-	UART->RXDRDY = 0x0;
-	
-	if(!(UART->RXDRDY)){
+			
+	if(UART->RXDRDY){
+		UART-> STARTRX = 1;
 		char letter = UART->RXD;
+		UART->STOPRX = 1;
 		return letter;
 	}
+
 	else {
 		return '\0';
 	}
-	/*while (!(UART->RXDRDY)) { // can not escape this loop...
-
-	}
 	
-	UART->RXD = UART->TXD;
-	return UART->RXD;*/
 }
+
+int a = 0;
+
+void led_lights() {
+	if(a){
+		GPIO->OUTCLR = (1 << 13);
+		GPIO->OUTCLR = (1 << 14);
+		GPIO->OUTCLR = (1 << 15);
+		a = 0;
+	}
+	else {
+		GPIO->OUTSET = (1 << 13);
+		GPIO->OUTSET = (1 << 14);
+		GPIO->OUTSET = (1 << 15);
+		a = 1;
+	//}
+}	
