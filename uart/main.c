@@ -2,10 +2,10 @@
 #include "gpio.h"
 #include <stdio.h>
 
+
 int main(void) {
 
-	uart_init();
-	
+	// Configure LED Matrix
 	for(int i = 4; i <= 15; i++){
 		GPIO->DIRSET = (1 << i);
 		GPIO->OUTCLR = (1 << i);
@@ -15,21 +15,15 @@ int main(void) {
 	GPIO->PIN_CNF[17] = 0;
 	GPIO->PIN_CNF[26] = 0;
 	
-	
 	int button_A = (1 << 17);
 	int button_B = (1 << 26);
 
-
-	//int sleep = 0;
-	
-
+	int sleep = 0;
+	uart_init();
 
 	while(1){
 
-		char letter = uart_read();
-
-		uart_send(letter);
-
+		// to check uart use: picocom -b 9600 /dev/ttyACM0
 		//Check if button A is pressed;
 		if (!(GPIO->IN & button_A)) {
 			uart_send('A');
@@ -40,12 +34,11 @@ int main(void) {
 			uart_send('B');
 		}
 		
-		if (letter != '\0'){
+		if (uart_read() != '\0'){
 			led_lights();
 		}
 
 		sleep = 200000;
-		//sleep = 10000;
 		while(--sleep);
 	}
 	return 0;

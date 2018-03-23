@@ -57,11 +57,11 @@ void uart_init() {
     GPIO->PIN_CNF[24] = 1;
     GPIO->PIN_CNF[25] = 0;
     
-    	//Set UART tx/rx to tx/tx pin
+    //Set UART tx/rx to gpio pin
 	UART->PSELTXD = 24;
    	UART->PSELRXD = 25;
 
-	//Max sendingsrate 9600 DEC -> 0x30 HEX
+	//Max sendingsrate 9600
 	UART->BAUDRATE = 0x00275000;
 
 	//Deaktiverer CTS og RTS
@@ -76,23 +76,21 @@ void uart_init() {
 
 void uart_send(char letter) {
 	
-	UART->STARTTX = 0x1;
+	UART->STARTTX = 1;
 	UART->TXDRDY = 0;
 	UART->TXD = letter;
 
 	while (!(UART->TXDRDY)){
 	}
 
-	UART->STOPTX = 0x1;
+	UART->STOPTX = 1;
 
 }
 
 char uart_read() {
-			
 	if(UART->RXDRDY){
-		UART-> STARTRX = 1;
+		UART->RXDRDY = 0;
 		char letter = UART->RXD;
-		UART->STOPRX = 1;
 		return letter;
 	}
 
@@ -116,5 +114,5 @@ void led_lights() {
 		GPIO->OUTSET = (1 << 14);
 		GPIO->OUTSET = (1 << 15);
 		a = 1;
-	//}
+	}
 }	
