@@ -1,5 +1,5 @@
 FAMILY := nrf51
-SOURCES := main.c uart.c
+SOURCES := main.c 
 
 BUILD_DIR := .build_system
 LINKER_SCRIPT := $(BUILD_DIR)/linker_script.ld
