@@ -42,8 +42,8 @@ int main(void) {
 	//PPI
 
 	//Setup PPI
-	PPI->CHEN 		|= 0b111;
-	//PPI->CHENSET 	|= 0b111;
+	//PPI->CHEN 		|= 0b111;
+	PPI->CHENSET 	|= 0b111;
 
 	//Channel 0
 	PPI->PPI_CH[0].EEP = (uint32_t)&(GPIOTE->IN[0]);
