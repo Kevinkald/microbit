@@ -3,6 +3,9 @@
 #include <stdio.h>
 
 
+
+
+
 int main(void) {
 
 	// Configure LED Matrix
@@ -39,8 +42,13 @@ int main(void) {
 			led_lights();
 		}
 
+		iprintf("Norway has %d counties.\n\r", 18);
+
 		sleep = 200000;
 		while(--sleep);
 	}
 	return 0;
 }
+
+
+
