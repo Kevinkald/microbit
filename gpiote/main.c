@@ -24,26 +24,26 @@ int main(void) {
 	GPIOTE->CONFIG[1] |= TASK;
 	GPIOTE->CONFIG[1] |= (13 << 8);
 	GPIOTE->CONFIG[1] |= (Toggle << 16);
-	GPIOTE->CONFIG[1] |= 0;
+	GPIOTE->CONFIG[1] |= (0 << 20);
 
 	//Channel 2
 	GPIOTE->CONFIG[2] |= TASK;
 	GPIOTE->CONFIG[2] |= (14 << 8);
 	GPIOTE->CONFIG[2] |= (Toggle << 16);
-	GPIOTE->CONFIG[2] |= 0;
+	GPIOTE->CONFIG[2] |= (0 << 20);
 
 	//Channel 3
 	GPIOTE->CONFIG[3] |= TASK;
 	GPIOTE->CONFIG[3] |= (15 << 8);
 	GPIOTE->CONFIG[3] |= (Toggle << 16);
-	GPIOTE->CONFIG[3] |= 0;
+	GPIOTE->CONFIG[3] |= (0 << 20);
 
 
 	//PPI
 
 	//Setup PPI
-	PPI->CHEN 		|= 0b111;
-	//PPI->CHENSET 	|= 0b111;
+	//PPI->CHEN 		|= 0b111;
+	PPI->CHENSET 	|= 0b111;
 
 	//Channel 0
 	PPI->PPI_CH[0].EEP = (uint32_t)&(GPIOTE->IN[0]);

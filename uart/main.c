@@ -24,6 +24,8 @@ int main(void) {
 	int sleep = 0;
 	uart_init();
 
+	iprintf("Norway has %d counties.\n\r", 18);
+
 	while(1){
 
 		// to check uart use: picocom -b 9600 /dev/ttyACM0
@@ -42,7 +44,7 @@ int main(void) {
 			led_lights();
 		}
 
-		iprintf("Norway has %d counties.\n\r", 18);
+		
 
 		sleep = 200000;
 		while(--sleep);
