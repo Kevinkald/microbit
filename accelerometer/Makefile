@@ -1,5 +1,5 @@
 FAMILY := nrf51
-SOURCES := main.c uart.c twi.c utility.c accel.c
+SOURCES := main.c twi.c utility.c accel.c
 SOURCES += ubit_button.c ubit_led_matrix.c
 
 BUILD_DIR := .build_system
