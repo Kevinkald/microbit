@@ -28,8 +28,8 @@ uint8_t * data_buffer;
 data_buffer = (uint8_t *)malloc(8 * sizeof(uint8_t));
 
 void twi_multi_read(uint8_t slave_adress, uint8_t start_register,
-					int registers_to_read, uint8_t * data_buffer
-					) {
+	int registers_to_read, uint8_t * data_buffer) {
+	
 	TWI0->ADDRESS = slave_address; 
 	TWI0->STARTTX = 1;
 	TWI0->TXDSENT = 0;
