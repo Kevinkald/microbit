@@ -41,8 +41,9 @@ void twi_multi_read(uint8_t slave_adress, uint8_t start_register,
 	TWI0->STARTRX = 1;
 	
 	for(int i = 0; i < registers_to_read-1 ; i++){
-		while(!TWIO->RXD);
+		while(!TWIO->RXDREADY);
 		data_buffer[i] = TWI0->RXD;
+		TWI0->RXDREADY = 0;
 		TWI0->STARTRX = 0;
 
 	}
