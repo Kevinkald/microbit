@@ -17,8 +17,7 @@ for(int i = 4; i <= 15; i++){
 	
 	int sleep = 0;
 	int registers_to_read = 1;
-	int slave_adress = i2c_address;
-	start_register = WHO_AM_I;
+	uint8_t start_register = WHO_AM_I;
 	
 	twi_multi_read(slave_adress, start_register,registers_to_read, &data_buffer);
 
