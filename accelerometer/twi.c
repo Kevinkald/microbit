@@ -1,6 +1,6 @@
 #include "twi.h"
 
-#define i2c_address 0x1D
+#define slave_address 0x1D
 #define WHO_AM_I 0x0D
 
 void twi_init(){
