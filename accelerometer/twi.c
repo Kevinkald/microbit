@@ -19,7 +19,7 @@ void twi_init(){
 	TWI0->PSELSDA = 30;
 
 	//set enable and freq
-	TWI0->ADDRESS = i2c_address;
+	TWI0->ADDRESS = slave_address;
 	TWI0->FREQUENCY = 0x01980000;
 	TWI0->ENABLE = 0x5;
 }
