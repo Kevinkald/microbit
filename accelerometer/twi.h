@@ -1,5 +1,11 @@
+#ifndef TWI_H
+#define TWI_H
 #include <stdint.h>
 #include <stdlib.h> 
+
+#define slave_address 0x1D
+#define WHO_AM_I 0x0D
+
 
 #define TWI0 ((NRF_TWI_REG*)0x40003000)
 typedef struct {
@@ -48,7 +54,7 @@ typedef struct {
 
 } NRF_TWI_REG;
 
-#define GPIO ((NRF_GPIO_REGS*)0x50000000)
+/*#define GPIO ((NRF_GPIO_REGS*)0x50000000)
 typedef struct {
 	volatile uint32_t RESERVED0[321];
 	volatile uint32_t OUT;
@@ -60,7 +66,7 @@ typedef struct {
 	volatile uint32_t DIRCLR;
 	volatile uint32_t RESERVED1[120];
 	volatile uint32_t PIN_CNF[32];
-} NRF_GPIO_REGS;
+} NRF_GPIO_REGS;*/
 
 void twi_init();
 
@@ -69,3 +75,11 @@ void twi_multi_read(uint8_t slave_adress,
 					int registers_to_read,
 					uint8_t * data_buffer
 					);
+
+void twi_multi_write(uint8_t slave_adress,
+					uint8_t start_register,
+					int registers_to_write,
+					uint8_t * data_buffer
+					);
+
+#endif //TWI_H

@@ -2,9 +2,9 @@
 #include "accel.h"
 #include "twi.h"
 
-#define ACCEL_ADDR			____
-#define ACCEL_DATA_REG		____
-#define ACCEL_CTRL_REG_1	____
+#define ACCEL_ADDR			0x1D
+#define ACCEL_DATA_REG		0x01
+#define ACCEL_CTRL_REG_1	0x2A
 #define ACCEL_200_HZ_ON		0x11
 
 void accel_init(){

@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include "ubit_led_matrix.h"
-#include "gpio.h"
+#include "../uart/gpio.h"
 
 static void ubit_led_matrix_helper_disable_all_pins();
 static void ubit_led_matrix_helper_translate_x_y_to_ground_supply(int * data);

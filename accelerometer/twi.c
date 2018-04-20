@@ -1,7 +1,5 @@
 #include "twi.h"
-
-#define slave_address 0x1D
-#define WHO_AM_I 0x0D
+#include "../uart/gpio.h"
 
 void twi_init(){
 
@@ -24,13 +22,11 @@ void twi_init(){
 	TWI0->ENABLE = 0x5;
 }
 
-uint8_t * data_buffer;
-data_buffer = (uint8_t *)malloc(8 * sizeof(uint8_t));
 
 void twi_multi_read(uint8_t slave_adress, uint8_t start_register,
 	int registers_to_read, uint8_t * data_buffer) {
 	
-	TWI0->ADDRESS = slave_address; 
+	TWI0->ADDRESS = slave_adress; 
 	TWI0->STARTTX = 1;
 	TWI0->TXDSENT = 0;
 	TWI0->TXD = start_register;
@@ -40,15 +36,41 @@ void twi_multi_read(uint8_t slave_adress, uint8_t start_register,
 	TWI0->RXDREADY = 0;
 	TWI0->STARTRX = 1;
 	
-	for(int i = 0; i < registers_to_read-1 ; i++){
-		while(!TWIO->RXDREADY);
-		data_buffer[i] = TWI0->RXD;
+	for(int i = 0; i < registers_to_read-1; i++){
+		while(!TWI0->RXDREADY);
 		TWI0->RXDREADY = 0;
-		TWI0->STARTRX = 0;
+		data_buffer[i] = TWI0->RXD;
+		
+		//TWI0->STARTRX = 0;
 
 	}
 	
 	TWI0->STOP = 1;
+	while(!TWI0->RXDREADY);
+	data_buffer[registers_to_read-1] = TWI0->RXD;
+	TWI0->RXDREADY = 0;
+	//TWI0->STARTRX = 0;
+
 }
 
-free(data_buffer); 
+void twi_multi_write(uint8_t slave_adress, uint8_t start_register, int registers_to_write, uint8_t * data_buffer){
+	TWI0->ADDRESS = slave_adress;
+	TWI0->STARTTX = 1;
+	TWI0->TXDSENT = 0;
+	TWI0->TXD = start_register;
+
+	while(!TWI0->TXDSENT);
+
+	for(int i = 0; i < registers_to_write-1; i++){
+		TWI0->TXDSENT = 0;
+		TWI0->TXD = data_buffer[i];
+		while(!TWI0->TXDSENT);
+	}
+	
+	TWI0->STOP = 1;
+
+}
+
+
+
+
