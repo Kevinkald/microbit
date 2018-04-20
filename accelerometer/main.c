@@ -39,13 +39,9 @@ for(int i = 4; i <= 15; i++){
 		GPIO->OUTSET = (1 << 15);
 	} */
 	
-
-
-
 	int * data_buffer = (int *)malloc(3 * sizeof(int));
 	//int data_buffer[3];
 	 
-	//int i = 0;
 	while(1){
 		
 		
@@ -53,21 +49,15 @@ for(int i = 4; i <= 15; i++){
 		int x_acc = data_buffer[0];
 		int y_acc = data_buffer[1];
 		int z_acc = data_buffer[2];
-	
-		
+			
 		utility_print(&uart_send, "X: %6d Y: %6d Z: %6d\n\r", x_acc, y_acc, z_acc);
-		//utility_print(&uart_send, "i: %6d\n\r ", i);
-		//i++;
-		
-		
+				
 		int x_led = x_acc / 50;
 		int y_led = - y_acc / 50;
 		ubit_led_matrix_light_only_at(x_led, y_led);
 		
-
 		sleep = 100000;
 		while(--sleep);
-		
 	}
 	free(data_buffer);
 	return 0;
