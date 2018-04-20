@@ -61,7 +61,7 @@ void twi_multi_write(uint8_t slave_adress, uint8_t start_register, int registers
 
 	while(!TWI0->TXDSENT);
 
-	for(int i = 0; i < registers_to_write-1; i++){
+	for(int i = 0; i < registers_to_write; i++){
 		TWI0->TXDSENT = 0;
 		TWI0->TXD = data_buffer[i];
 		while(!TWI0->TXDSENT);

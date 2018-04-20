@@ -59,13 +59,13 @@ for(int i = 4; i <= 15; i++){
 		//utility_print(&uart_send, "i: %6d\n\r ", i);
 		//i++;
 		
-		/*
+		
 		int x_led = x_acc / 50;
 		int y_led = - y_acc / 50;
 		ubit_led_matrix_light_only_at(x_led, y_led);
-		*/
+		
 
-		sleep = 10000;
+		sleep = 100000;
 		while(--sleep);
 		
 	}
